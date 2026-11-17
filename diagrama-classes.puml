@@ -1,0 +1,45 @@
+@startuml
+
+class Personagem {
+    +getNome()
+    +getNivel()
+    +getVida()
+    +getId()
+    +setId()
+}
+
+class PersonagemRepository {
+    -proximoId: int
+    -personagens: ArrayList<Personagem>
+    +PersonagemRepository()
+    +adicionar(personagem: Personagem): void
+    +listar(): ArrayList<Personagem>
+    +buscarPorId(id: int): Personagem
+    +remover(id: int): void
+}
+
+class Exception
+
+class CadastroDuplicadoException {
+    +CadastroDuplicadoException(mensagem: String)
+}
+
+class DadosInvalidosException {
+    +DadosInvalidosException(mensagem: String)
+}
+
+class RegistroNaoEncontradoException {
+    +RegistroNaoEncontradoException(mensagem: String)
+}
+
+PersonagemRepository "1" o-- "*" Personagem
+
+PersonagemRepository ..> CadastroDuplicadoException
+PersonagemRepository ..> DadosInvalidosException
+PersonagemRepository ..> RegistroNaoEncontradoException
+
+Exception <|-- CadastroDuplicadoException
+Exception <|-- DadosInvalidosException
+Exception <|-- RegistroNaoEncontradoException
+
+@enduml
